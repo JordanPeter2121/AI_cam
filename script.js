@@ -469,10 +469,10 @@ document.getElementById('nav-log').addEventListener('click', () => switchPage('l
 // 13. INISIALISASI
 // ==========================================
 function initApp() {
-    console.log("🚀 Memulai inisialisasi aplikasi...");
+    console.log("Memulai inisialisasi aplikasi...");
     listenToDatabase();
     loadModel();
-    console.log("✅ Inisialisasi selesai!");
+    console.log("Inisialisasi selesai!");
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
