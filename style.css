@@ -1,0 +1,559 @@
+/* ==========================================
+   RESET & BASE STYLES
+   ========================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root {
+    --primary: #6c5ce7;
+    --primary-light: #a29bfe;
+    --accent: #fd79a8;
+    --dark: #0a0a0a;
+    --dark-card: #1a1a2e;
+    --dark-border: #2d2d44;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --success: #00b894;
+    --warning: #fdcb6e;
+    --danger: #e17055;
+    --gradient-ai: linear-gradient(135deg, #6c5ce7, #fd79a8);
+}
+
+body {
+    background-color: #000000;
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================
+   APP CONTAINER (Mobile Frame)
+   ========================================== */
+.app-container {
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    max-height: 932px;
+    margin: 0 auto;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+.app-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gradient-ai);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.mode-badge {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mode-badge.online {
+    background: rgba(0, 184, 148, 0.3);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+/* ==========================================
+   CAMERA AREA
+   ========================================== */
+.camera-area {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+#video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ==========================================
+   CAMERA OVERLAY (Loading)
+   ========================================== */
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    gap: 16px;
+}
+
+.camera-overlay.hidden {
+    display: none !important;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.camera-overlay p {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ==========================================
+   DETECTION INFO PANEL (Bottom-Left)
+   ========================================== */
+.detection-info {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    z-index: 40;
+    max-width: 280px;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.detected-class {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.detected-summary {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.detected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-chip {
+    background: rgba(108, 92, 231, 0.9);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================
+   FLOATING ACTION BUTTONS (Right Side)
+   ========================================== */
+.floating-buttons {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fab {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.fab:active {
+    transform: scale(0.9);
+}
+
+.fab-camera {
+    background: var(--gradient-ai);
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+}
+
+.fab-camera:hover {
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.5);
+}
+
+.fab-switch {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fab-switch:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.fab-ai {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fab-ai:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.fab-ai.active {
+    background: var(--gradient-ai);
+    border-color: transparent;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
+}
+
+.fab-flash {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fab-flash:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.fab-flash.active {
+    background: var(--warning);
+    color: var(--dark);
+}
+
+.fab-label {
+    position: absolute;
+    right: 58px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.fab:hover .fab-label {
+    opacity: 1;
+}
+
+/* ==========================================
+   BOTTOM NAVIGATION
+   ========================================== */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 20px 20px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px 20px;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.nav-item i {
+    font-size: 22px;
+}
+
+.nav-item span {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.nav-item.active {
+    color: white;
+}
+
+.nav-badge {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+}
+
+.nav-badge.hidden {
+    display: none;
+}
+
+/* ==========================================
+   LOG PAGE
+   ========================================== */
+.log-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    padding-bottom: 80px;
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.log-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.log-count {
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.log-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+.log-item {
+    background: var(--dark-card);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--primary);
+}
+
+.log-item .time {
+    color: var(--text-muted);
+    font-size: 11px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.log-item .items {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 60px 20px;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* ==========================================
+   TOAST NOTIFICATION
+   ========================================== */
+.toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--success);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none;
+    z-index: 200;
+    animation: toastSlide 0.3s ease-out;
+}
+
+.toast.error {
+    background: var(--danger);
+}
+
+@keyframes toastSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* ==========================================
+   SCROLLBAR STYLING
+   ========================================== */
+.log-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.log-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.log-list::-webkit-scrollbar-thumb {
+    background: var(--dark-border);
+    border-radius: 2px;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 360px) {
+    .detected-class {
+        font-size: 24px;
+    }
+    
+    .fab {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+    }
+    
+    .fab-camera {
+        width: 50px;
+        height: 50px;
+    }
+}
