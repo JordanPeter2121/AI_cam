@@ -101,13 +101,8 @@ const logBadge = document.getElementById('log-badge');
 // 4. DAFTAR KELAS TARGET
 // ==========================================
 const TARGET_CLASSES = [
-    'cell phone',
-    'mouse',
-    'laptop',
-    'keyboard',
-    'person',
-    'book',
-    'scissors'
+    'cell phone', 'mouse', 'laptop', 'keyboard',
+    'person', 'book', 'scissors'
 ];
 
 const CLASS_COLORS = {
@@ -137,9 +132,7 @@ function showToast(message, isError = false) {
     toast.textContent = message;
     toast.className = 'toast' + (isError ? ' error' : '');
     toast.style.display = 'block';
-    setTimeout(() => {
-        toast.style.display = 'none';
-    }, 3000);
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
 }
 
 function updateDetectionInfo(predictions) {
@@ -148,7 +141,6 @@ function updateDetectionInfo(predictions) {
         return;
     }
 
-    // Ambil prediksi dengan confidence tertinggi
     const topPred = predictions.reduce((max, p) => 
         p.confidence > max.confidence ? p : max, predictions[0]
     );
@@ -249,10 +241,8 @@ async function detectLoop() {
             }
         });
 
-        // Update info panel
         updateDetectionInfo(detectedTargets);
 
-        // Throttled save
         if (detectedTargets.length > 0 && (Date.now() - lastSaveTime > SAVE_THROTTLE_MS)) {
             saveToDatabase(detectedTargets);
             lastSaveTime = Date.now();
@@ -307,7 +297,7 @@ function stopCamera() {
     if (currentStream) {
         if (isAIDetecting) {
             isAIDetecting = false;
-            document.getElementById('btn-ai').classList.remove('active');
+            document.getElementById('logo-ai-btn').classList.remove('active');
         }
 
         currentStream.getTracks().forEach(track => track.stop());
@@ -318,7 +308,7 @@ function stopCamera() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         detectionInfo.style.display = 'none';
 
-        console.log(" Kamera dimatikan.");
+        console.log("🛑 Kamera dimatikan.");
     }
 }
 
@@ -444,7 +434,9 @@ document.getElementById('btn-camera').addEventListener('click', () => {
 
 document.getElementById('btn-switch').addEventListener('click', switchCamera);
 
-document.getElementById('btn-ai').addEventListener('click', () => {
+// LOGO AI CLICKABLE - Toggle AI
+const logoAiBtn = document.getElementById('logo-ai-btn');
+logoAiBtn.addEventListener('click', () => {
     if (!model) {
         showToast("Model AI belum siap!", true);
         return;
@@ -452,7 +444,7 @@ document.getElementById('btn-ai').addEventListener('click', () => {
 
     if (isAIDetecting) {
         isAIDetecting = false;
-        document.getElementById('btn-ai').classList.remove('active');
+        logoAiBtn.classList.remove('active');
         detectionInfo.style.display = 'none';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         showToast("AI Scan dihentikan");
@@ -462,7 +454,7 @@ document.getElementById('btn-ai').addEventListener('click', () => {
             return;
         }
         isAIDetecting = true;
-        document.getElementById('btn-ai').classList.add('active');
+        logoAiBtn.classList.add('active');
         showToast("AI Scan dimulai");
         detectLoop();
     }
@@ -477,7 +469,7 @@ document.getElementById('nav-log').addEventListener('click', () => switchPage('l
 // 13. INISIALISASI
 // ==========================================
 function initApp() {
-    console.log(" Memulai inisialisasi aplikasi...");
+    console.log("🚀 Memulai inisialisasi aplikasi...");
     listenToDatabase();
     loadModel();
     console.log("✅ Inisialisasi selesai!");

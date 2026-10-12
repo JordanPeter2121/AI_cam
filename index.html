@@ -15,9 +15,7 @@
         <!-- HEADER -->
         <header class="app-header">
             <div class="header-left">
-                <div class="logo-icon">
-                    <i class="fas fa-robot"></i>
-                </div>
+                <img src="assets/LogoAICam.png" alt="AI Cam Logo" class="header-logo-static">
                 <span class="logo-text">Scanner</span>
             </div>
             <div class="header-right">
@@ -30,32 +28,28 @@
             <video id="video" autoplay playsinline muted></video>
             <canvas id="canvas"></canvas>
 
-            <!-- Loading Overlay -->
             <div class="camera-overlay" id="camera-overlay">
                 <div class="loading-spinner"></div>
                 <p id="overlay-text">Memulai Sistem...</p>
             </div>
 
-            <!-- Detection Info Panel (Bottom-Left) -->
             <div class="detection-info" id="detection-info" style="display: none;">
                 <h2 class="detected-class" id="detected-class">person</h2>
                 <p class="detected-summary" id="detected-summary">Terdeteksi 1 objek • Confidence 82%</p>
-                <div class="detected-tags" id="detected-tags">
-                    <span class="tag-chip">person • 82%</span>
-                </div>
+                <div class="detected-tags" id="detected-tags"></div>
             </div>
 
-            <!-- Floating Action Buttons (Right Side) -->
+            <!-- FLOATING BUTTONS (Tanpa tombol AI Scan) -->
             <div class="floating-buttons">
                 <button class="fab fab-camera" id="btn-camera" title="Kamera">
                     <i class="fas fa-camera"></i>
                 </button>
+                
+                <!-- Logo AI yang BISA DIKLIK untuk aktifkan AI -->
+                <img src="assets/LogoAI.png" alt="AI Scan" class="logo-ai-clickable" id="logo-ai-btn" title="Klik untuk AI Scan">
+                
                 <button class="fab fab-switch" id="btn-switch" title="Ganti Kamera">
                     <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="fab fab-ai" id="btn-ai" title="AI Scan">
-                    <i class="fas fa-sparkles"></i>
-                    <span class="fab-label">AI Scan</span>
                 </button>
                 <button class="fab fab-flash" id="btn-flash" title="Flash">
                     <i class="fas fa-bolt"></i>
@@ -73,11 +67,11 @@
             <button class="nav-item" id="nav-log" data-page="log">
                 <i class="fas fa-clipboard-list"></i>
                 <span>Log Data</span>
-                <span class="nav-badge" id="log-badge">0</span>
+                <span class="nav-badge hidden" id="log-badge">0</span>
             </button>
         </nav>
 
-        <!-- LOG PAGE (Hidden by default) -->
+        <!-- LOG PAGE -->
         <div class="log-page" id="log-page" style="display: none;">
             <div class="log-header">
                 <h2>Detected Objects Logs</h2>
@@ -93,10 +87,8 @@
 
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
-    <!-- Load TensorFlow.js & COCO-SSD -->
     <script src="https://unpkg.com/@tensorflow/tfjs@3.20.0/dist/tf.min.js"></script>
     <script src="https://unpkg.com/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
     <script src="script.js" type="module"></script>

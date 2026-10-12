@@ -110,6 +110,20 @@ body {
 }
 
 /* ==========================================
+   LOGO AICAM DI HEADER (TIDAK BISA DIKLIK)
+   ========================================== */
+.header-logo-static {
+    height: 28px;
+    width: auto;
+    margin-right: 8px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ==========================================
    CAMERA AREA
    ========================================== */
 .camera-area {
@@ -245,6 +259,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    align-items: center;
 }
 
 .fab {
@@ -278,44 +293,13 @@ body {
     box-shadow: 0 6px 20px rgba(108, 92, 231, 0.5);
 }
 
-.fab-switch {
+.fab-switch, .fab-flash {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.fab-switch:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.fab-ai {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.fab-ai:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.fab-ai.active {
-    background: var(--gradient-ai);
-    border-color: transparent;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7); }
-    50% { box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
-}
-
-.fab-flash {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.fab-flash:hover {
+.fab-switch:hover, .fab-flash:hover {
     background: rgba(255, 255, 255, 0.25);
 }
 
@@ -341,6 +325,52 @@ body {
 
 .fab:hover .fab-label {
     opacity: 1;
+}
+
+/* ==========================================
+   LOGO AI CLICKABLE
+   ========================================== */
+.logo-ai-clickable {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    cursor: pointer;
+    filter: drop-shadow(0 2px 6px rgba(108, 92, 231, 0.4));
+    transition: all 0.3s ease;
+    margin: 4px 0;
+    border-radius: 50%;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-ai-clickable:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(108, 92, 231, 0.8));
+    background: rgba(108, 92, 231, 0.3);
+    border-color: var(--primary);
+}
+
+.logo-ai-clickable:active {
+    transform: scale(0.95);
+}
+
+.logo-ai-clickable.active {
+    background: var(--gradient-ai);
+    border-color: transparent;
+    animation: logoPulse 2s infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 0 12px rgba(108, 92, 231, 0);
+        transform: scale(1.05);
+    }
 }
 
 /* ==========================================
@@ -542,18 +572,9 @@ body {
    RESPONSIVE
    ========================================== */
 @media (max-width: 360px) {
-    .detected-class {
-        font-size: 24px;
-    }
-    
-    .fab {
-        width: 44px;
-        height: 44px;
-        font-size: 16px;
-    }
-    
-    .fab-camera {
-        width: 50px;
-        height: 50px;
-    }
+    .detected-class { font-size: 24px; }
+    .fab { width: 44px; height: 44px; font-size: 16px; }
+    .fab-camera { width: 50px; height: 50px; }
+    .header-logo-static { height: 22px; margin-right: 6px; }
+    .logo-ai-clickable { width: 44px; height: 44px; }
 }
